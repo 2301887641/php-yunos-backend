@@ -1,23 +1,22 @@
 ﻿<!DOCTYPE html>
 <html style="overflow: hidden;">
 <head>
-    <title>NFine快速开发平台</title>
+    <title>YunBoss快速开发平台</title>
     <link href="/static/css/framework-font.css" rel="stylesheet"/>
     <script src="/static/js/jquery-2.1.1.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="/static/bootstrap/bootstrap.js"></script>
+    <link href="/static/bootstrap/bootstrap.min.css" rel="stylesheet"/>
     <link href="/static/css/dialog.css" rel="stylesheet"/>
     <script src="/static/js/dialog.js"></script>
     <script src="/static/js/jquery.cookie.js"></script>
     <link href="/static/css/framework-theme.css" rel="stylesheet"/>
     <script src="/static/js/framework-ui.js"></script>
     <script src="/static/js/framework-clientdata.js"></script>
-
 </head>
 <body style="overflow: hidden;">
 <div id="ajax-loader"
      style="cursor: progress; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: #fff; z-index: 10000; overflow: hidden;">
-    <img src="/static/img/ajax-loader.gif"
+    <img src="/static/images/ajax-loader.gif"
          style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;"/>
 </div>
 <div id="theme-wrapper">
@@ -68,7 +67,7 @@
                         </li>
                         <li class="dropdown profile-dropdown">
                             <a href="#" class="dropdown" data-toggle="dropdown">
-                                <img src="/static/img/scarlet-159.png" alt=""/>
+                                <img src="/static/images/scarlet-159.png" alt=""/>
                                 <span class="hidden-xs">admin</span>
                             </a>
                             <ul class="dropdown-menu pull-right">
@@ -93,7 +92,7 @@
                 <section id="col-left" class="col-left-nano">
                     <div id="col-left-inner" class="col-left-nano-content">
                         <div id="user-left-box" class="clearfix hidden-sm hidden-xs dropdown profile2-dropdown">
-                            <img alt="" src="/static/img/scarlet-159.png"/>
+                            <img alt="" src="/static/images/scarlet-159.png"/>
                             <div class="user-box">
                                     <span class="name">
                                         admin
@@ -112,7 +111,7 @@
                                         <li><a class="menuItem" data-id="252229DB-35CA-47AE-BDAE-C9903ED5BA7B"
                                                href="/SystemManage/Organize/Index" data-index="1">机构管理</a></li>
                                         <li><a class="menuItem" data-id="91A6CFAD-B2F9-4294-BDAE-76DECF412C6C"
-                                               href="/SystemManage/Role/Index" data-index="2">角色管理</a></li>
+                                               href="{:URL('index/rulecontrl/index')}" data-index="2">角色管理</a></li>
                                         <li><a class="menuItem" data-id="F298F868-B689-4982-8C8B-9268CBF0308D"
                                                href="/SystemManage/Duty/Index" data-index="3">岗位管理</a></li>
                                         <li><a class="menuItem" data-id="38CA5A66-C993-4410-AF95-50489B22939C"

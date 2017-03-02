@@ -7,7 +7,7 @@
  * 首页相关控制器
  */
 namespace app\index\controller;
-use app\home\controller\Base;
+use app\index\model\Role;
 class Index extends Base
 {
     /**
