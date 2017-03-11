@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>BOSS 云系统</title>
     <link rel="stylesheet" href="/static/css/font-awesome.css">
-    <script src="/static/js/jquery-1.8.3.min.js"></script>
-    <script src="/static/js/base.js"></script>
+    <script src="/static/js/jquery-2.1.1.js"></script>
+    <script src="/static/js/yii.js"></script>
 
     <style>
         * {
@@ -288,8 +288,7 @@
         });
         //点击登陆
         login_info.login_submit.click(function(){
-            var b=new base();
-            b.p_ajax({
+            yii.modal.ajax({
                 url:"{:url('index/login_on')}",
                 type:"post",
                 data:$("form").serialize(),

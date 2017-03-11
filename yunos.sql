@@ -13,9 +13,6 @@ File Encoding         : 65001
 Date: 2017-03-10 17:31:18
 */
 
-SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
 -- Table structure for `yunos_account`
 -- ----------------------------
 DROP TABLE IF EXISTS `yunos_account`;
