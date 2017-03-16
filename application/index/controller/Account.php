@@ -20,4 +20,14 @@ class Account extends Base
         return $this->fetch();
     }
 
+    /**
+     * 添加页面展示
+     * @return \think\response\View
+     */
+    public function addView()
+    {
+        return view("addView");
+    }
+
+
 }

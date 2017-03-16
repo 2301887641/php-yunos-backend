@@ -21,7 +21,14 @@ class Base extends Controller
         $this->Rinstance = Request::instance();
     }
 
-
+    /**
+     * 提示权限不足信息
+     * @return \think\response\View
+     */
+    public function permissionDeny()
+    {
+        return view("common@Helper/error");
+    }
 
 
 
