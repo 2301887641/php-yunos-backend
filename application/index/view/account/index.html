@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>权限管理</title>
+    <title>账号管理</title>
     <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="/static/dataTables/jquery.dataTables.css">
 
@@ -19,61 +19,41 @@
     <link rel="stylesheet" href="/static/css/font-awesome.css">
 </head>
 <body>
-<form class="form-inline" role="form">
+<div class="form-inline" role="form">
     <div class="form-group">
         <label class="form-label">&nbsp;查询:</label>
-        <input type="text" class="form-control" name="name">
+        <input type="text" class="form-control">
     </div>
     <div class="form-group">
         <button class="btn btn-primary">查询</button>
     </div>
     <div class="form-group">
-        <button type="button" class="btn btn-info" id="add">添加</button>
+        <button class="btn btn-info" id="add">添加</button>
     </div>
-</form>
-<p>
-<table class="table table-hover table-bordered table-striped" width="100%">
+</div>
+<table id="example" class="display" width="100%">
     <thead>
     <tr>
         <th>id</th>
-        <th>权限名称</th>
-        <th>模块名称</th>
-        <th>控制器名称</th>
-        <th>方法名称</th>
+        <th>角色名称</th>
+        <th>权限列表</th>
+        <th>是否启用</th>
+        <th>排序</th>
         <th>创建时间</th>
         <th>操作</th>
     </tr>
     </thead>
-    {volist name="data" id="src"}
-    <tr>
-        <td>{$src.id}</td>
-        <td>{$src.name}</td>
-        <td>{$src.module_name}</td>
-        <td>{$src.controller_name}</td>
-        <td>{$src.action_name}</td>
-        <td>{$src.create_time}</td>
-        <td width="10%" style="text-align: center;">
-            <button class="btn btn-sm btn-primary">编辑</button>
-            <button class="btn btn-sm btn-danger">删除</button>
-        </td>
-    </tr>
-    {/volist}
-
 </table>
-</p>
-<div style="text-align:right;">
-    {$data->render()}
-</div>
 </body>
 </html>
 <script>
     var indexinfo = (function () {
-        var addView = "{:URL('index/Privilege/addView')}";
-        var addUrl = "{:URL('index/Privilege/add')}";
+        var addView = "{:URL('index/account/addView')}";
+        var datatable_url="{:URL('index/account/getAll')}";
         return {
-            addUrl: addUrl,
-            addView: addView
+            datatable_url: datatable_url,
+            addView:addView
         };
     })();
 </script>
-<script src="/static/js/logic/privilege.js"></script>
+<script src="/static/js/logic/account.js"></script>
