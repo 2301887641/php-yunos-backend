@@ -30,7 +30,25 @@ class Base extends Controller
         return view("common@Helper/error");
     }
 
-
+    /**
+     * 验证token
+     * @return array
+     */
+    public function checkToken()
+    {
+        $token = Session::get("token");
+        $getToken = $this->request->post("token");
+        if (empty($getToken)) {
+            return true;
+        }
+        if ($token != $getToken) {
+            exit(json_encode([
+                "status" => self::error,
+                "msg" => "请不要重复提交",
+                "title" => "数据提交"
+            ]));
+        }
+    }
 
 
 }
