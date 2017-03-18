@@ -8,6 +8,7 @@
 namespace  app\index\controller;
 use think\Controller;
 use think\Request;
+use think\Session;
 class Base extends Controller
 {
     //Request实例
@@ -18,7 +19,10 @@ class Base extends Controller
     public function _initialize()
     {
         parent::_initialize();
+        //直接实例化request类方便后期调用
         $this->Rinstance = Request::instance();
+        //
+        $this->checkToken();
     }
 
     /**
@@ -42,13 +46,42 @@ class Base extends Controller
             return true;
         }
         if ($token != $getToken) {
-            exit(json_encode([
-                "status" => self::error,
-                "msg" => "请不要重复提交",
-                "title" => "数据提交"
-            ]));
+            $this->msg("请不要重复提交","数据提交","error");
         }
     }
-
+    /**
+     * 统一的信息打印
+     * @param $msg
+     * @param $title
+     * @param string $status
+     */
+    public function msg($msg,$title,$status="success")
+    {
+        if($status=="success"){
+            $this->deleteToken();
+        }
+        exit(json_encode([
+            "status" => $status,
+            "msg" => $msg,
+            "title" => $title
+        ]));
+    }
+    /**
+     * 删除token
+     */
+    public function deleteToken()
+    {
+        Session::delete("token");
+    }
+    /**
+     * 生成token
+     * @return string
+     */
+    public function buildToken()
+    {
+        $md5 = md5(md5(time() . chr(rand(65, 90)) . rand(1, 1000)) . rand(1, 1000));
+        Session::set("token", $md5);
+        return $md5;
+    }
 
 }
