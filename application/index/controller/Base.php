@@ -21,8 +21,7 @@ class Base extends Controller
         parent::_initialize();
         //直接实例化request类方便后期调用
         $this->Rinstance = Request::instance();
-        //
-        $this->checkToken();
+        //插入表单时 检查是否传入token
     }
 
     /**
@@ -42,9 +41,6 @@ class Base extends Controller
     {
         $token = Session::get("token");
         $getToken = $this->request->post("token");
-        if (empty($getToken)) {
-            return true;
-        }
         if ($token != $getToken) {
             $this->msg("请不要重复提交","数据提交","error");
         }

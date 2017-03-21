@@ -18,15 +18,12 @@ class Privilege extends Base
      */
     public function index()
     {
-        //获取name进行查询
-        $name = $this->Rinstance->get("name");
-        $where = [];
-        if (!empty($name)) {
-            $where["name"] = $name;
-        }
-        $data = \app\index\model\Privilege::where($where)->paginate(5);
+        $data = \app\index\model\Privilege::all();
+        $helper = new \app\common\controller\Helper();
+        //使用树型结构展示上级权限
+        $treeArr = $helper->get_tree($data);
         $this->assign([
-            "data" => $data
+            "data" => $treeArr
         ]);
         return $this->fetch();
     }
@@ -54,6 +51,7 @@ class Privilege extends Base
      */
     public function add()
     {
+        $this->checkToken();
         $rule = [
             ["name", "require|unique:Privilege", "请填写权限名称|权限名称已经存在"],
             ["module_name", "require", "请填写模块名称"],
@@ -72,4 +70,47 @@ class Privilege extends Base
         $this->msg("添加成功", "添加权限");
     }
 
+    /**
+     * 权限修改展示页面
+     * @return \think\response\View
+     */
+    public function saveView()
+    {
+        $id = $this->request->post("id");
+        $privilege = new \app\index\model\Privilege();
+        $helper = new \app\common\Helper();
+        $data = $privilege->field("id,name,parent_id")->where(["id"=>["neq",$id]])->select();
+        $one = $privilege->where(["id" => $id])->find();
+        //使用树型结构展示上级权限
+        $treeArr = $helper->get_tree($data);
+        $this->assign([
+            "treeArr" => $treeArr,
+            "token" => $this->buildToken(),
+            "data" => $one
+        ]);
+        return view("saveView");
+    }
+
+    /**
+     * 修改数据操作
+     */
+    public function save()
+    {
+        $this->checkToken();
+        $rule = [
+            ["name", "require|unique:Privilege", "请填写权限名称|权限名称已经存在"],
+            ["module_name", "require", "请填写模块名称"],
+            ["controller_name", "require", "请填写控制器名称"],
+            ["action_name", "require", "请填写方法名称"],
+        ];
+        $validate = new Validate($rule);
+        $request = $this->Rinstance->post();
+        if (!$validate->check($request)) {
+            $this->msg($validate->getError(), "修改信息", "error");
+        }
+        if (!\app\index\model\Privilege::update($request)) {
+            $this->msg("修改失败", "修改信息", "error");
+        }
+        $this->msg("修改成功", "修改信息");
+    }
 }

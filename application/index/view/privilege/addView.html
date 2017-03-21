@@ -8,14 +8,15 @@
 </div>
 <div class="modal-body">
     <form class="form-horizontal">
+        <input type="hidden" name="token" value="{$token}">
         <div class="form-group">
             <label for="" class="col-sm-3 control-label">*上级权限:</label>
             <div class="col-sm-8">
                 <select name="parent_id">
                     <option value="0">顶级权限</option>
-                    {volist name="treeArr" id="tree"}
-                    <option value="{$tree.id}">{$tree.name}</option>
-                    {/volist}
+                    <?php foreach($treeArr as $treek=>$treev):?>
+                    <option value="{$treev.id}"><?php echo str_repeat("---",$treev["level"]);?>{$treev.name}</option>
+                    <?php endforeach;?>
                 </select>
             </div>
         </div>

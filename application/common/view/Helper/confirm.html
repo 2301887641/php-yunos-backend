@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" close="true">
+        <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title">
+        <span class="fa fa-legal"></span>&nbsp;添加权限
+    </h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal">
+        <input type="hidden" name="token" value="{$token}">
+        <div class="form-group">
+            <label for="" class="col-sm-3 control-label">*上级权限:</label>
+            <div class="col-sm-8">
+                <select name="parent_id">
+                    <option value="0">顶级权限</option>
+                    <?php foreach($treeArr as $treek=>$treev):?>
+                    <option value="{$treev.id}"><?php echo str_repeat("---",$treev["level"]);?>{$treev.name}</option>
+                    <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">*权限名称:</label>
+            <div class="col-sm-4">
+                <input class="form-control" name="name" placeholder="账号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-3 control-label">*模块名称:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="module_name" placeholder="模块名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-3 control-label">*控制器名称:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" placeholder="控制器名称" name="controller_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-3 control-label">*方法名称:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="action_name" placeholder="方法名称">
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-sm" close="true">关闭</button>
+    <button type="button" class="btn btn-primary btn-sm" _event="add">保存</button>
+</div>

@@ -6,7 +6,7 @@
  * Date: 17-3-14
  * Time: 下午6:23
  */
-namespace app\common;
+namespace app\common\controller;
 
 use think\view;
 
@@ -31,10 +31,21 @@ class Helper
 
         return $arr;
     }
+
+    /**
+     * 错误页面展示
+     * @return string
+     */
     public function error()
     {
         $view=new view();
         return $view->fetch("error");
+    }
+
+    public function confirm()
+    {
+        $view=new view();
+        return $view->fetch("confirm");
     }
 
 }
