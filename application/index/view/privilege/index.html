@@ -68,13 +68,15 @@
         var addUrl = "{:URL('index/Privilege/add')}";
         var saveView="{:URL('index/Privilege/saveView')}";
         var saveUrl="{:URL('index/Privilege/save')}";
-        var confirmView="{URL('common/Helper/confirm')}"
+        var delView="{:URL('index/Base/delConfirm')}";
+        var delUrl="{:URL('index/Privilege/del')}";
         return {
             addUrl: addUrl,
             addView: addView,
             saveView:saveView,
             saveUrl:saveUrl,
-            confirmView:confirmView
+            delView:delView,
+            delUrl:delUrl
         };
     })();
 </script>

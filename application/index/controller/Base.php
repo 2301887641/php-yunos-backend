@@ -69,6 +69,7 @@ class Base extends Controller
     {
         Session::delete("token");
     }
+
     /**
      * 生成token
      * @return string
@@ -78,6 +79,10 @@ class Base extends Controller
         $md5 = md5(md5(time() . chr(rand(65, 90)) . rand(1, 1000)) . rand(1, 1000));
         Session::set("token", $md5);
         return $md5;
+    }
+    public function delConfirm()
+    {
+        return view("public/confirm");
     }
 
 }

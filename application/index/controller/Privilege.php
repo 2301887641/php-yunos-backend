@@ -8,7 +8,6 @@
 namespace app\index\controller;
 
 use think\Validate;
-use think\Db;
 
 class Privilege extends Base
 {
@@ -35,7 +34,7 @@ class Privilege extends Base
     public function addView()
     {
         $privilege = new \app\index\model\Privilege();
-        $helper = new \app\common\Helper();
+        $helper = new \app\common\controller\Helper();
         $data = $privilege->field("id,name,parent_id")->select();
         //使用树型结构展示上级权限
         $treeArr = $helper->get_tree($data);
@@ -78,7 +77,7 @@ class Privilege extends Base
     {
         $id = $this->request->post("id");
         $privilege = new \app\index\model\Privilege();
-        $helper = new \app\common\Helper();
+        $helper = new \app\common\controller\Helper();
         $data = $privilege->field("id,name,parent_id")->where(["id"=>["neq",$id]])->select();
         $one = $privilege->where(["id" => $id])->find();
         //使用树型结构展示上级权限
@@ -112,5 +111,10 @@ class Privilege extends Base
             $this->msg("修改失败", "修改信息", "error");
         }
         $this->msg("修改成功", "修改信息");
+    }
+
+    public function del()
+    {
+        echo 1111;
     }
 }

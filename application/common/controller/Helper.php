@@ -9,8 +9,8 @@
 namespace app\common\controller;
 
 use think\view;
-
-class Helper
+use think\Controller;
+class Helper extends Controller
 {
     /**
      * 组织权限为树型结构
@@ -36,16 +36,14 @@ class Helper
      * 错误页面展示
      * @return string
      */
-    public function error()
+    public function errord()
     {
-        $view=new view();
-        return $view->fetch("error");
+        return $this->fetch();
     }
 
     public function confirm()
     {
-        $view=new view();
-        return $view->fetch("confirm");
+        return $this->fetch();
     }
 
 }
