@@ -19,6 +19,12 @@
     <link rel="stylesheet" href="/static/css/font-awesome.css">
 </head>
 <body>
+    {notempty name="$Think.session.success"}
+    <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        {$Think.session.success}
+    </div>
+    {/notempty}
 <form class="form-inline" role="form">
     <div class="form-group">
         <label class="form-label">&nbsp;查询:</label>

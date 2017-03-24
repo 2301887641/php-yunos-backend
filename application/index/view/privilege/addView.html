@@ -6,16 +6,20 @@
         <span class="fa fa-legal"></span>&nbsp;添加权限
     </h4>
 </div>
+<style>
+
+
+</style>
 <div class="modal-body">
     <form class="form-horizontal">
         <input type="hidden" name="token" value="{$token}">
         <div class="form-group">
             <label for="" class="col-sm-3 control-label">*上级权限:</label>
-            <div class="col-sm-8">
-                <select name="parent_id">
-                    <option value="0">顶级权限</option>
+            <div class="col-sm-4">
+                <select name="parent_id" class="form-control">
+                    <option  value="0">顶级权限</option>
                     <?php foreach($treeArr as $treek=>$treev):?>
-                    <option value="{$treev.id}"><?php echo str_repeat("---",$treev["level"]);?>{$treev.name}</option>
+                    <option  value="{$treev.id}"><?php echo str_repeat("---",$treev["level"]);?>{$treev.name}</option>
                     <?php endforeach;?>
                 </select>
             </div>

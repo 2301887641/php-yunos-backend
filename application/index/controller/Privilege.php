@@ -7,6 +7,7 @@
  */
 namespace app\index\controller;
 
+use think\Session;
 use think\Validate;
 
 class Privilege extends Base
@@ -17,6 +18,7 @@ class Privilege extends Base
      */
     public function index()
     {
+
         $data = \app\index\model\Privilege::all();
         $helper = new \app\common\controller\Helper();
         //使用树型结构展示上级权限
@@ -66,6 +68,7 @@ class Privilege extends Base
         if (!$privilege->id) {
             $this->msg("添加失败", "添加权限", "error");
         }
+        Session::flash("success", "添加权限成功!!");
         $this->msg("添加成功", "添加权限");
     }
 
@@ -78,7 +81,7 @@ class Privilege extends Base
         $id = $this->request->post("id");
         $privilege = new \app\index\model\Privilege();
         $helper = new \app\common\controller\Helper();
-        $data = $privilege->field("id,name,parent_id")->where(["id"=>["neq",$id]])->select();
+        $data = $privilege->field("id,name,parent_id")->where(["id" => ["neq", $id]])->select();
         $one = $privilege->where(["id" => $id])->find();
         //使用树型结构展示上级权限
         $treeArr = $helper->get_tree($data);
@@ -110,11 +113,19 @@ class Privilege extends Base
         if (!\app\index\model\Privilege::update($request)) {
             $this->msg("修改失败", "修改信息", "error");
         }
+        Session::flash("success", "修改权限成功!!");
         $this->msg("修改成功", "修改信息");
     }
 
+    /**
+     * 删除操作
+     */
     public function del()
     {
-        echo 1111;
+        $id = $this->request->post("id");
+        if(!\app\index\model\Privilege::destroy($id)){
+            $this->msg("删除失败", "删除操作","error");
+        }
+        $this->msg("删除成功", "删除操作");
     }
 }

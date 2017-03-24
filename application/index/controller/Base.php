@@ -5,14 +5,17 @@
  * Date: 2017/1/23
  * Time: 9:57
  */
-namespace  app\index\controller;
+namespace app\index\controller;
+
 use think\Controller;
 use think\Request;
 use think\Session;
+
 class Base extends Controller
 {
     //Request实例
     protected $Rinstance;
+
     /**
      * 初始化操作
      */
@@ -42,18 +45,19 @@ class Base extends Controller
         $token = Session::get("token");
         $getToken = $this->request->post("token");
         if ($token != $getToken) {
-            $this->msg("请不要重复提交","数据提交","error");
+            $this->msg("请不要重复提交", "数据提交", "error");
         }
     }
+
     /**
      * 统一的信息打印
      * @param $msg
      * @param $title
      * @param string $status
      */
-    public function msg($msg,$title,$status="success")
+    public function msg($msg, $title, $status = "success")
     {
-        if($status=="success"){
+        if ($status == "success") {
             $this->deleteToken();
         }
         exit(json_encode([
@@ -62,6 +66,7 @@ class Base extends Controller
             "title" => $title
         ]));
     }
+
     /**
      * 删除token
      */
@@ -80,9 +85,15 @@ class Base extends Controller
         Session::set("token", $md5);
         return $md5;
     }
+
+    /**
+     * 统一删除提示操作 并将id assign到页面
+     * @return \think\response\View
+     */
     public function delConfirm()
     {
-        return view("public/confirm");
+        $id = $this->request->post("id");
+        return view("public/confirm",$id);//这里如何将id assign出去
     }
 
 }
