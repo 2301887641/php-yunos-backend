@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" close="true">
+        <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title">
+        <span class="fa fa-user-plus"></span>&nbsp;添加角色
+    </h4>
+</div>
+<style>
+
+
+</style>
+<div class="modal-body">
+    <form class="form-horizontal">
+        <input type="hidden" name="token" value="{$token}">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">*角色名称:</label>
+            <div class="col-sm-4">
+                <input class="form-control" name="name" placeholder="角色名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-3 control-label">*权限列表:</label>
+            <div class="col-sm-8">
+                <select name="privilege_list[]" class="selectpicker" multiple data-actions-box="true">
+                        <?php foreach($treeArr as $treek=>$treev):?>
+                        <option  value="{$treev.id}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}</option>
+                        <?php endforeach;?>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default btn-sm" close="true">关闭</button>
+    <button type="button" class="btn btn-primary btn-sm" _event="add">保存</button>
+</div>
+<script>
+    $('.selectpicker').selectpicker({
+        title: '请选择权限'
+    });
+</script>

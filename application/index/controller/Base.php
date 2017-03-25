@@ -14,17 +14,14 @@ use think\Session;
 class Base extends Controller
 {
     //Request实例
-    protected $Rinstance;
+    protected $request;
 
-    /**
-     * 初始化操作
-     */
-    public function _initialize()
+    public function __construct(Request $request = null)
     {
-        parent::_initialize();
+        parent::__construct($request);
         //直接实例化request类方便后期调用
-        $this->Rinstance = Request::instance();
-        //插入表单时 检查是否传入token
+        $this->request = $request;
+//        echo $request->module();die;
     }
 
     /**
@@ -92,8 +89,8 @@ class Base extends Controller
      */
     public function delConfirm()
     {
-        $id = $this->request->post("id");
-        return view("public/confirm",$id);//这里如何将id assign出去
+        $id = $this->request("id");
+        return view("public/confirm",["id"=>$id]);//这里如何将id assign出去
     }
 
 }

@@ -60,7 +60,7 @@ class Privilege extends Base
             ["action_name", "require", "请填写方法名称"],
         ];
         $validate = new Validate($rule);
-        $request = $this->Rinstance->post();
+        $request = $this->request->post();
         if (!$validate->check($request)) {
             $this->msg($validate->getError(), "添加信息", "error");
         }
@@ -106,7 +106,7 @@ class Privilege extends Base
             ["action_name", "require", "请填写方法名称"],
         ];
         $validate = new Validate($rule);
-        $request = $this->Rinstance->post();
+        $request = $this->request->post();
         if (!$validate->check($request)) {
             $this->msg($validate->getError(), "修改信息", "error");
         }
@@ -126,6 +126,7 @@ class Privilege extends Base
         if(!\app\index\model\Privilege::destroy($id)){
             $this->msg("删除失败", "删除操作","error");
         }
+        Session::flash("success", "删除成功!!");
         $this->msg("删除成功", "删除操作");
     }
 }

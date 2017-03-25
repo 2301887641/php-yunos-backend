@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>权限管理</title>
+    <title>角色管理</title>
     {include file="public/header"/}
 </head>
 <body>
@@ -29,10 +29,8 @@
     <thead>
     <tr>
         <th>id</th>
-        <th>权限名称</th>
-        <th>模块名称</th>
-        <th>控制器名称</th>
-        <th>方法名称</th>
+        <th>角色名称</th>
+        <th>权限列表</th>
         <th>创建时间</th>
         <th>操作</th>
     </tr>
@@ -40,10 +38,8 @@
     <?php foreach($data as $datak=>$datav):?>
     <tr>
         <td>{$datav.id}</td>
-        <td><?php echo str_repeat("-----",$datav["level"]);?>{$datav.name}</td>
-        <td>{$datav.module_name}</td>
-        <td>{$datav.controller_name}</td>
-        <td>{$datav.action_name}</td>
+        <td>{$datav.name}</td>
+        <td>{$datav.privilege_text}</td>
         <td>{$datav.create_time}</td>
         <td width="10%" style="text-align: center;">
             <button class="btn btn-sm btn-primary edit"  _attr="{$datav.id}">编辑</button>
@@ -52,25 +48,32 @@
     </tr>
     <?php endforeach;?>
 </table>
+
+        {$data->render()}
+
 </p>
 </body>
 </html>
 <script>
     var indexinfo = (function () {
-        var addView = "{:URL('index/Privilege/addView')}";
-        var addUrl = "{:URL('index/Privilege/add')}";
-        var saveView="{:URL('index/Privilege/saveView')}";
-        var saveUrl="{:URL('index/Privilege/save')}";
+        var addView = "{:URL('index/Role/addView')}";
+        var addUrl = "{:URL('index/Role/add')}";
+        var saveView="{:URL('index/Role/saveView')}";
+        var saveUrl="{:URL('index/Role/save')}";
         var delView="{:URL('index/Base/delConfirm')}";
-        var delUrl="{:URL('index/Privilege/del')}";
+        var delUrl="{:URL('index/Role/del')}";
         return {
             addUrl: addUrl,
             addView: addView,
             saveView:saveView,
             saveUrl:saveUrl,
             delView:delView,
-            delUrl:delUrl
+            delUrl:delUrl,
+            privilege_arr:''
         };
     })();
 </script>
-<script src="/static/js/logic/privilege.js"></script>
+<script src="/static/js/logic/role.js"></script>
+<!-- cdn 一款bootstrap-select插件-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>

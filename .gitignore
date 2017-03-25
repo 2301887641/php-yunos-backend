@@ -2,3 +2,6 @@
 composer.lock
 *.log
 thinkphp
+runtime
+将删除 .gitignore
+将删除 application/index/view/role/
