@@ -23,13 +23,15 @@
             <label for="" class="col-sm-3 control-label">*权限列表:</label>
             <div class="col-sm-8">
                 <select name="privilege_list[]" class="selectpicker" multiple data-actions-box="true">
-                        <?php foreach($treeArr as $treek=>$treev):
-                            if(empty($treev["level"])){
-                            $flag=$treev["name"];
+                    <?php foreach($treeArr as $treek=>$treev):
+                    if(empty($treev["level"])){
+                    $flag=$treev["name"];
                     }
                     ?>
-                        <option  value="{$treev.id}" _level="{$treev.level}" _flag="{$flag}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}</option>
-                        <?php endforeach;?>
+                    <option value="{$treev.id}" _parent_id="{$treev.parent_id}" _level="{$treev.level}"
+                            _flag="{$flag}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}
+                    </option>
+                    <?php endforeach;?>
                 </select>
             </div>
         </div>
@@ -43,24 +45,52 @@
     $('.selectpicker').selectpicker({
         title: '请选择权限'
     });
-    $('.selectpicker').on('changed.bs.select', function (e,clickedIndex,newValue) {
-//        console.log($('li[data-original-index="'+clickedIndex+'"]'))
+    var showIndex = [];
+    $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, newValue) {
         //点击的option
-        var clicked=$(this.options[clickedIndex]);
+        var clicked = $(this.options[clickedIndex]);
         //获取level
-        var level=clicked.attr("_level");
+        var level = clicked.attr("_level");
         //获取flag
-        var flag=clicked.attr("_flag");
-        //如果level大于0 说明选中的是下级元素
-        if(level>0){
+        var flag = clicked.attr("_flag");
+        //获取parent_id
+        var parent_id = clicked.attr("_parent_id");
+        //获取值
+        var val = clicked.val();
+        //如果是选中的话
+        if (newValue == true) {
+            //如果level大于0 说明选中的是下级元素
+            if (level > 0) {
+                showIndex = $(this).val();
+                $(this).find('option[_flag="' + flag + '"]').each(function (index, item) {
+                    var _level = $(item).attr("_level");
+                    var _val = $(item).val();
+                    //如果循环的level小于当前level
+                    if (_level < level) {
+                        //如果level==0 直接加入进来 如果循环的值等于当前的parent_id 加入进来
+                        if ((_level == "0") || (parent_id == _val))
+                            showIndex.push(_val);
+                    }
+                    //如果level和当前的相等 并且 值也相等 说明到当前了 下面的无需再匹配 因为下面没有上级了
+                    if ((_level == level) && (val == _val)) {
+                        return false;
+                    }
+
+
+                })
+                $(this).selectpicker('val', showIndex.unique());
+            }
+            //如果是取消选中的话
+        } else {
+            $(this).find('option[_flag="' + flag + '"]').each(function (index, item) {
+
+
+
+
+            });
 
         }
-//        console.log($("li[data-original-index='+clickedIndex+']")[0])
-//        var clicked_level=$(clicked).attr("_level");
-//        if(clicked_level>0){
-//            clicked.attr("selected",false);
-//        }
-//        console.log($(this).val())
+
 
     });
 </script>
