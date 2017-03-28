@@ -52,7 +52,7 @@ class Base extends Controller
      * @param $title
      * @param string $status
      */
-    public function msg($msg, $title, $status = "success")
+    public function msg($msg='', $title='', $status = "success")
     {
         if ($status == "success") {
             $this->deleteToken();
@@ -89,7 +89,7 @@ class Base extends Controller
      */
     public function delConfirm()
     {
-        $id = $this->request("id");
+        $id = $this->request->post("id");
         return view("public/confirm",["id"=>$id]);//这里如何将id assign出去
     }
 

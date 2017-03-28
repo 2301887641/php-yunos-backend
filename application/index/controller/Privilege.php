@@ -69,7 +69,7 @@ class Privilege extends Base
             $this->msg("添加失败", "添加权限", "error");
         }
         Session::flash("success", "添加权限成功!!");
-        $this->msg("添加成功", "添加权限");
+        $this->msg();
     }
 
     /**
@@ -114,7 +114,7 @@ class Privilege extends Base
             $this->msg("修改失败", "修改信息", "error");
         }
         Session::flash("success", "修改权限成功!!");
-        $this->msg("修改成功", "修改信息");
+        $this->msg();
     }
 
     /**
@@ -127,6 +127,6 @@ class Privilege extends Base
             $this->msg("删除失败", "删除操作","error");
         }
         Session::flash("success", "删除成功!!");
-        $this->msg("删除成功", "删除操作");
+        $this->msg();
     }
 }

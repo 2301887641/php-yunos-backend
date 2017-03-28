@@ -23,8 +23,12 @@
             <label for="" class="col-sm-3 control-label">*权限列表:</label>
             <div class="col-sm-8">
                 <select name="privilege_list[]" class="selectpicker" multiple data-actions-box="true">
-                        <?php foreach($treeArr as $treek=>$treev):?>
-                        <option  value="{$treev.id}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}</option>
+                        <?php foreach($treeArr as $treek=>$treev):
+                            if(empty($treev["level"])){
+                            $flag=$treev["name"];
+                    }
+                    ?>
+                        <option  value="{$treev.id}" _level="{$treev.level}" _flag="{$flag}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}</option>
                         <?php endforeach;?>
                 </select>
             </div>
@@ -38,5 +42,25 @@
 <script>
     $('.selectpicker').selectpicker({
         title: '请选择权限'
+    });
+    $('.selectpicker').on('changed.bs.select', function (e,clickedIndex,newValue) {
+//        console.log($('li[data-original-index="'+clickedIndex+'"]'))
+        //点击的option
+        var clicked=$(this.options[clickedIndex]);
+        //获取level
+        var level=clicked.attr("_level");
+        //获取flag
+        var flag=clicked.attr("_flag");
+        //如果level大于0 说明选中的是下级元素
+        if(level>0){
+
+        }
+//        console.log($("li[data-original-index='+clickedIndex+']")[0])
+//        var clicked_level=$(clicked).attr("_level");
+//        if(clicked_level>0){
+//            clicked.attr("selected",false);
+//        }
+//        console.log($(this).val())
+
     });
 </script>
