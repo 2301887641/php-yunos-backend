@@ -90,8 +90,6 @@
                     var _val = $(item).val();
                     temp.push(_val);
                 });
-                var lastArr = showIndex.unique().diff(temp);
-                $(this).selectpicker('val', lastArr);
             }else if(level==1){
                 $(this).find('option[_flag="' + flag + '"]').each(function (index, item) {
                     var _level = $(item).attr("_level");
@@ -101,9 +99,11 @@
                         temp.push(_val);
                     }
                 });
-                var lastArr = showIndex.unique().diff(temp);
-                $(this).selectpicker('val', lastArr);
+                temp.push(val);
+
             }
+            var lastArr = showIndex.unique().diff(temp);
+            $(this).selectpicker('val', lastArr);
         }
     });
 </script>
