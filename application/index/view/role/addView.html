@@ -45,9 +45,10 @@
     $('.selectpicker').selectpicker({
         title: '请选择权限'
     });
-    var showIndex = [];
-    var temp = [];
+
     $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, newValue) {
+        var showIndex = [];
+        var temp = [];
         //点击的option
         var clicked = $(this.options[clickedIndex]);
         //获取level
@@ -84,26 +85,30 @@
             $(this).selectpicker('val', showIndex.unique());
             //如果是取消选中的话
         } else {
+            showIndex = $(this).val();
             if (level == 0) {
                 $(this).find('option[_flag="' + flag + '"]').each(function (index, item) {
                     var _level = $(item).attr("_level");
                     var _val = $(item).val();
                     temp.push(_val);
                 });
-            }else if(level==1){
+                var lastArr = showIndex.unique().diff(temp);
+                $(this).selectpicker('val', lastArr);
+            } else if (level == 1) {
                 $(this).find('option[_flag="' + flag + '"]').each(function (index, item) {
                     var _level = $(item).attr("_level");
                     var _val = $(item).val();
-                    var _parent_id=$(item).attr("_parent_id");
-                    if((_level==2) && (val==_parent_id)){
+                    var _parent_id = $(item).attr("_parent_id");
+                    if ((_level == 2) && (val == _parent_id)) {
+                        console.log(1111)
                         temp.push(_val);
                     }
                 });
                 temp.push(val);
-
+                var lastArr = showIndex.unique().diff(temp);
+                $(this).selectpicker('val', lastArr);
             }
-            var lastArr = showIndex.unique().diff(temp);
-            $(this).selectpicker('val', lastArr);
+
         }
     });
 </script>
