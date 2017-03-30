@@ -343,7 +343,7 @@ Array.prototype.unique = function() {
     }
     return r;
 }
-//数组取差集
+//数组取差 集
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
 };
