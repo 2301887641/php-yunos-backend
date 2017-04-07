@@ -93,4 +93,15 @@ class Base extends Controller
         return view("public/confirm",["id"=>$id]);//这里如何将id assign出去
     }
 
+    /**
+     * 成功
+     * @param $name
+     * @param $value
+     */
+    public function successSessionMsg($value)
+    {
+        Session::flash("success",$value);
+        $this->msg();
+    }
+
 }

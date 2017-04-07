@@ -68,8 +68,7 @@ class Privilege extends Base
         if (!$privilege->id) {
             $this->msg("添加失败", "添加权限", "error");
         }
-        Session::flash("success", "添加权限成功!!");
-        $this->msg();
+        $this->successSessionMsg("添加权限成功");
     }
 
     /**
@@ -113,8 +112,7 @@ class Privilege extends Base
         if (!\app\index\model\Privilege::update($request)) {
             $this->msg("修改失败", "修改信息", "error");
         }
-        Session::flash("success", "修改权限成功!!");
-        $this->msg();
+        $this->successSessionMsg("修改权限成功");
     }
 
     /**
@@ -126,7 +124,6 @@ class Privilege extends Base
         if(!\app\index\model\Privilege::destroy($id)){
             $this->msg("删除失败", "删除操作","error");
         }
-        Session::flash("success", "删除成功!!");
-        $this->msg();
+        $this->successSessionMsg("删除成功");
     }
 }

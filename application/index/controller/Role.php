@@ -20,7 +20,7 @@ class Role extends Base
      */
     public function index()
     {
-        $data = \app\index\model\Role::where(1)->paginate(2);
+        $data = \app\index\model\Role::where(1)->paginate(10);
         $this->assign([
             "data" => $data
         ]);
@@ -63,8 +63,7 @@ class Role extends Base
         if (!\app\index\model\Role::create($data)) {
             $this->msg("添加失败", "添加角色", "error");
         }
-        Session::flash("success", "添加角色成功!!");
-        $this->msg();
+        $this->successSessionMsg("添加角色成功");
     }
 
     /**
@@ -87,6 +86,9 @@ class Role extends Base
         return view("saveView");
     }
 
+    /**
+     * 角色修改
+     */
     public function save()
     {
         $rule = [
@@ -102,7 +104,18 @@ class Role extends Base
         if (!\app\index\model\Role::update($data)) {
             $this->msg("修改失败", "修改角色", "error");
         }
-        Session::flash("success", "修改角色成功!!");
-        $this->msg();
+        $this->successSessionMsg("修改角色成功");
+    }
+
+    /**
+     * 删除操作
+     */
+    public function del()
+    {
+        $id = $this->request->post("id");
+        if(!\app\index\model\Role::destroy($id)){
+            $this->msg("删除失败", "删除操作","error");
+        }
+        $this->successSessionMsg("删除成功");
     }
 }

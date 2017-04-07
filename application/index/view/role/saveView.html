@@ -6,10 +6,6 @@
         <span class="fa fa-user-plus"></span>&nbsp;修改角色
     </h4>
 </div>
-<style>
-
-
-</style>
 <div class="modal-body">
     <form class="form-horizontal">
         <input type="hidden" name="token" value="{$token}">
@@ -23,10 +19,16 @@
         <div class="form-group">
             <label for="" class="col-sm-3 control-label">*权限列表:</label>
             <div class="col-sm-8">
-                <select name="privilege_list[]" class="selectpicker" multiple data-actions-box="true">
-                        <?php foreach($treeArr as $treek=>$treev):?>
-                        <option  value="{$treev.id}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}</option>
-                        <?php endforeach;?>
+                <select name="privilege_list[]" class="selectpicker" multiple>
+                    <?php foreach($treeArr as $treek=>$treev):
+                    if(empty($treev["level"])){
+                    $flag=$treev["name"];
+                    }
+                    ?>
+                    <option value="{$treev.id}" _parent_id="{$treev.parent_id}" _level="{$treev.level}"
+                            _flag="{$flag}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}
+                    </option>
+                    <?php endforeach;?>
                 </select>
             </div>
         </div>
@@ -34,9 +36,12 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default btn-sm" close="true">关闭</button>
-    <button type="button" class="btn btn-primary btn-sm" _event="add">保存</button>
+    <button type="button" class="btn btn-primary btn-sm" _event="edit">保存</button>
 </div>
 <script>
-    indexinfo.privilege_arr=[{$data.privilege_list}];
-    $('.selectpicker').selectpicker('val',indexinfo.privilege_arr);
+    indexinfo.privilege_arr = [{$data.privilege_list
+    }]
+    ;
+    $('.selectpicker').selectpicker('val', indexinfo.privilege_arr);
+    $('.selectpicker').on('changed.bs.select', privilegeTree);
 </script>

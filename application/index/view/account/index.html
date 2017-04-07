@@ -2,58 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>账号管理</title>
-    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/dataTables/jquery.dataTables.css">
-
-    <script src="/static/js/jquery-2.1.1.js"></script>
-    <script src="/static/bootstrap/bootstrap.js"></script>
-    <script src="/static/dataTables/jquery.dataTables.js"></script>
-    <script src="/static/js/yii.js"></script>
-
-    <!-- PNotify -->
-    <script type="text/javascript" src="/static/pnotify/pnotify.js"></script>
-    <link href="/static/pnotify/pnotify.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/pnotify/pnotify.brighttheme.css" rel="stylesheet" type="text/css"/>
-
-    <link rel="stylesheet" href="/static/css/font-awesome.css">
+    <title>帐号管理</title>
+    {include file="public/header"/}
 </head>
 <body>
-<div class="form-inline" role="form">
+    {notempty name="$Think.session.success"}
+    <div class="alert alert-info">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        {$Think.session.success}
+    </div>
+    {/notempty}
+<form class="form-inline" role="form">
     <div class="form-group">
         <label class="form-label">&nbsp;查询:</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" name="name">
     </div>
     <div class="form-group">
         <button class="btn btn-primary">查询</button>
     </div>
     <div class="form-group">
-        <button class="btn btn-info" id="add">添加</button>
+        <button type="button" class="btn btn-info" id="add">添加</button>
     </div>
-</div>
-<table id="example" class="display" width="100%">
+</form>
+<p>
+<table class="table table-hover table-bordered table-striped" width="100%">
     <thead>
     <tr>
         <th>id</th>
-        <th>角色名称</th>
-        <th>权限列表</th>
-        <th>是否启用</th>
-        <th>排序</th>
+        <th>帐号</th>
+        <th>角色</th>
         <th>创建时间</th>
         <th>操作</th>
     </tr>
     </thead>
+    <?php foreach($data as $datak=>$datav):?>
+    <tr>
+        <td>{$datav.id}</td>
+        <td>{$datav.account}</td>
+        <td>{$datav.role}</td>
+        <td>{$datav.create_time}</td>
+        <td width="10%" style="text-align: center;">
+            <button class="btn btn-sm btn-primary edit"  _attr="{$datav.id}">编辑</button>
+            <button class="btn btn-sm btn-danger del" _attr="{$datav.id}">删除</button>
+        </td>
+    </tr>
+    <?php endforeach;?>
 </table>
+        {$data->render()}
+</p>
 </body>
 </html>
 <script>
     var indexinfo = (function () {
-        var addView = "{:URL('index/account/addView')}";
-        var datatable_url="{:URL('index/account/getAll')}";
+        var addView = "{:URL('index/Account/addView')}";
+        var addUrl = "{:URL('index/Account/add')}";
+        var saveView="{:URL('index/Account/saveView')}";
+        var saveUrl="{:URL('index/Account/save')}";
+        var delView="{:URL('index/Account/delConfirm')}";
+        var delUrl="{:URL('index/Account/del')}";
         return {
-            datatable_url: datatable_url,
-            addView:addView
+            addUrl: addUrl,
+            addView: addView,
+            saveView:saveView,
+            saveUrl:saveUrl,
+            delView:delView,
+            delUrl:delUrl,
+            privilege_arr:''
         };
     })();
 </script>
 <script src="/static/js/logic/account.js"></script>
+<!-- cdn 一款bootstrap-select插件-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>

@@ -3,27 +3,39 @@
         <span aria-hidden="true">×</span>
     </button>
     <h4 class="modal-title">
-        <span class="fa fa-graduation-cap"></span>&nbsp;添加账号
+        <span class="fa fa-user-plus"></span>&nbsp;添加帐号
     </h4>
 </div>
+
 <div class="modal-body">
     <form class="form-horizontal">
+        <input type="hidden" name="token" value="{$token}">
         <div class="form-group">
-            <label class="col-sm-3 control-label">*账号:</label>
+            <label class="col-sm-3 control-label">*帐号:</label>
             <div class="col-sm-4">
-                <input class="form-control" name="account" placeholder="账号">
+                <input class="form-control" name="account" placeholder="帐号">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">*密码:</label>
-            <div class="col-sm-8">
-                <input class="form-control" type="password" name="passwd">
+            <div class="col-sm-4">
+                <input class="form-control" name="passwd" placeholder="密码" type="password">
             </div>
         </div>
         <div class="form-group">
-            <label class="col-sm-3 control-label">*角色:</label>
+            <label for="" class="col-sm-3 control-label">*角色:</label>
             <div class="col-sm-8">
-                <input class="form-control" id="node_company">
+                <select name="role[]" class="selectpicker">
+                    <?php foreach($role as $rolek=>$rolev):
+                    if($rolev["id"]==1){
+                        $roleid="*";
+                    }else{
+                        $roleid=$rolev["id"];
+                    }
+                    ?>
+                    <option value="{$roleid}">{$rolev.name}</option>
+                    <?php endforeach;?>
+                </select>
             </div>
         </div>
     </form>
@@ -32,3 +44,8 @@
     <button type="button" class="btn btn-default btn-sm" close="true">关闭</button>
     <button type="button" class="btn btn-primary btn-sm" _event="add">保存</button>
 </div>
+<script>
+    $('.selectpicker').selectpicker({
+        title: '请选择角色'
+    });
+</script>
