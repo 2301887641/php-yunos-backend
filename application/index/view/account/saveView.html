@@ -3,31 +3,37 @@
         <span aria-hidden="true">×</span>
     </button>
     <h4 class="modal-title">
-        <span class="fa fa-user-plus"></span>&nbsp;修改角色
+        <span class="fa fa-user-plus"></span>&nbsp;修改帐号
     </h4>
 </div>
+
 <div class="modal-body">
     <form class="form-horizontal">
         <input type="hidden" name="token" value="{$token}">
         <input type="hidden" name="id" value="{$data.id}">
         <div class="form-group">
-            <label class="col-sm-3 control-label">*角色名称:</label>
+            <label class="col-sm-3 control-label">*帐号:</label>
             <div class="col-sm-4">
-                <input class="form-control" name="name" placeholder="角色名称" value="{$data.name}">
+                <input class="form-control" name="account" placeholder="帐号" type="text" value="{$data.account}">
             </div>
         </div>
         <div class="form-group">
-            <label for="" class="col-sm-3 control-label">*权限列表:</label>
+            <label class="col-sm-3 control-label">*密码:</label>
+            <div class="col-sm-4">
+                <input class="form-control" name="passwd" placeholder="密码" type="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-3 control-label">*角色:</label>
             <div class="col-sm-8">
-                <select name="privilege_list[]" class="selectpicker" multiple>
-                    <?php foreach($treeArr as $treek=>$treev):
-                    if(empty($treev["level"])){
-                    $flag=$treev["name"];
-                    }
+                <select name="role" class="selectpicker">
+                    <?php foreach($role as $rolek=>$rolev):
+                        $select='';
+                        if($rolev["id"]==$data["role"]){
+                             $select='selected';
+                         }
                     ?>
-                    <option value="{$treev.id}" _parent_id="{$treev.parent_id}" _level="{$treev.level}"
-                            _flag="{$flag}"><?=str_repeat(".....",$treev["level"]);?>{$treev.name}
-                    </option>
+                    <option value="{$rolev.id}" <?php echo $select;?> >{$rolev.name}</option>
                     <?php endforeach;?>
                 </select>
             </div>
@@ -39,9 +45,7 @@
     <button type="button" class="btn btn-primary btn-sm" _event="edit">保存</button>
 </div>
 <script>
-    indexinfo.privilege_arr = [{$data.privilege_list
-    }]
-    ;
-    $('.selectpicker').selectpicker('val', indexinfo.privilege_arr);
-    $('.selectpicker').on('changed.bs.select', privilegeTree);
+    $('.selectpicker').selectpicker({
+        title: '请选择角色'
+    });
 </script>

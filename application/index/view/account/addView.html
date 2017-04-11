@@ -13,7 +13,7 @@
         <div class="form-group">
             <label class="col-sm-3 control-label">*帐号:</label>
             <div class="col-sm-4">
-                <input class="form-control" name="account" placeholder="帐号">
+                <input class="form-control" name="account" placeholder="帐号" type="text">
             </div>
         </div>
         <div class="form-group">
@@ -25,15 +25,9 @@
         <div class="form-group">
             <label for="" class="col-sm-3 control-label">*角色:</label>
             <div class="col-sm-8">
-                <select name="role[]" class="selectpicker">
-                    <?php foreach($role as $rolek=>$rolev):
-                    if($rolev["id"]==1){
-                        $roleid="*";
-                    }else{
-                        $roleid=$rolev["id"];
-                    }
-                    ?>
-                    <option value="{$roleid}">{$rolev.name}</option>
+                <select name="role" class="selectpicker">
+                    <?php foreach($role as $rolek=>$rolev):?>
+                    <option value="{$rolev.id}">{$rolev.name}</option>
                     <?php endforeach;?>
                 </select>
             </div>
