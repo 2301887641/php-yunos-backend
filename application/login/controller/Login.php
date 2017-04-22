@@ -6,6 +6,7 @@
  * Time: 10:32
  */
 namespace app\login\controller;
+use app\index\model\Account;
 use think\Config;
 use think\Controller;
 use think\Request;
@@ -33,12 +34,12 @@ class Login extends Controller
         $rules=[
             "account_name"=>"require",
             "account_password"=>"require",
-            "captcha_moude"=>"require"
+//            "captcha_moude"=>"require"
         ];
         $msg=[
             "account_name.require"=>"请输入用户名",
             "account_password.require"=>"请输入密码",
-            "captcha_moude.require"=>"请输入验证码"
+//            "captcha_moude.require"=>"请输入验证码"
         ];
         //检查用户名和密码
         $validate=new Validate($rules,$msg);
@@ -46,12 +47,11 @@ class Login extends Controller
             return(["state"=>"error","msg"=>$validate->getError()]);
         }
         //验证码
-        if(!captcha_check($post_data["captcha_moude"])){
-            //验证失败
-            return(["state"=>"error","msg"=>"验证码错误"]);
-        };
-
-
+//        if(!captcha_check($post_data["captcha_moude"])){
+//            //验证失败
+//            return(["state"=>"error","msg"=>"验证码错误"]);
+//        };
+        return (new Account())->checkLogin($post_data);
     }
 
 

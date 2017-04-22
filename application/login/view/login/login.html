@@ -250,18 +250,16 @@
                     <input type="text" name="account_name" placeholder="用户名"><i class="fa fa-user"></i>
                 </p>
                 <p>
-                    <input type="text" name="account_password" placeholder="密码"><i class="fa fa-key"></i>
+                    <input type="password" name="account_password" placeholder="密码"><i class="fa fa-key"></i>
                 </p>
                 <p>
-                    <input type="text" name="captcha_moude" placeholder="验证码"><i class="login_captcha">
+                    <input type="text" name="captcha_moude" placeholder="验证码" style="width:140px;"><i class="login_captcha">
                     <img src="{:captcha_src()}" alt="验证码" id="login_captcha_again"/></i>
                 </p>
                 <p class="login_button">
                     <button type="button" id="login_submit">登&nbsp;&nbsp;录</button>
                 </p>
-                <div id="login_tips">
-
-                </div>
+                <div id="login_tips"></div>
             </form>
         </div>
     </div>
@@ -289,7 +287,7 @@
         //点击登陆
         login_info.login_submit.click(function(){
             yii.modal.ajax({
-                url:"{:url('index/login_on')}",
+                url:"{:url('login/login_on')}",
                 type:"post",
                 data:$("form").serialize(),
                 success:success
@@ -298,9 +296,11 @@
         });
         //ajax 回调
         function success(data){
-            if(data.state=="error"){
+            if(data.errno=="1"){
                 login_info.login_tips.html($('<span class="fa fa-question-circle"> '+data.msg+' </span>')
                 );
+            }else{
+                location.href=data.route;
             }
         }
         //点击验证码

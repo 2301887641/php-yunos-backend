@@ -8,6 +8,8 @@
  */
 namespace app\index\controller;
 use app\index\model\Role;
+use think\Session;
+
 class Index extends Base
 {
     /**
@@ -16,7 +18,9 @@ class Index extends Base
      */
     public function index()
     {
-        return $this->fetch();
+        $sub=Session::get("sub");
+        $temp=Session::get("temp");
+        return $this->fetch("index",["sub"=>$sub,"temp"=>$temp]);
     }
     
     public function index_show()

@@ -20,7 +20,7 @@ class Role extends Base
      */
     public function index()
     {
-        $data = \app\index\model\Role::where(1)->paginate(10);
+        $data = \app\index\model\Role::where(["id"=>["neq",1]])->paginate(10);
         $this->assign([
             "data" => $data
         ]);

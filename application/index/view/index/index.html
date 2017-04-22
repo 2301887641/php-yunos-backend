@@ -104,28 +104,18 @@
                         </div>
                         <div class="collapse navbar-collapse navbar-ex1-collapse" id="sidebar-nav">
                             <ul class="nav nav-pills nav-stacked">
-                                <li class=""><a data-id="462027E0-0848-41DD-BCC3-025DCAE65555" href="#"
-                                                class="dropdown-toggle"><i class="fa fa-gears"></i><span>系统管理</span><i
+                                <?php foreach($sub as $subk=>$subv):?>
+                                <li class=""><a data-id="AE65555-" href="#"
+                                                class="dropdown-toggle"><i class="fa fa-gears"></i><span><?=$subv["name"];?></span><i
                                         class="fa fa-angle-right drop-icon"></i></a>
                                     <ul class="submenu" style="display: none; overflow: auto;">
+                                        <?php foreach($subv["sub"] as $subk2=>$subv2):?>
                                         <li><a class="menuItem" data-id="252229DB-35CA-47AE-BDAE-C9903ED5BA7B"
-                                               href="{:URL('index/Account/index')}" data-index="1">账号管理</a></li>
-                                        <li><a class="menuItem" data-id="91A6CFAD-B2F9-4294-BDAE-76DECF412C6C"
-                                               href="{:URL('index/Role/index')}" data-index="2">角色管理</a></li>
-                                        <li><a class="menuItem" data-id="F298F868-B689-4982-8C8B-9268CBF0308D"
-                                               href="{:URL('index/Privilege/index')}" data-index="3">权限管理</a></li>
-                                        <li><a class="menuItem" data-id="38CA5A66-C993-4410-AF95-50489B22939C"
-                                               href="/SystemManage/User/Index" data-index="4">用户管理</a></li>
-                                        <li><a class="menuItem" data-id="337A4661-99A5-4E5E-B028-861CACAF9917"
-                                               href="/SystemManage/Area/Index" data-index="5">区域管理</a></li>
-                                        <li><a class="menuItem" data-id="423A200B-FA5F-4B29-B7B7-A3F5474B725F"
-                                               href="/SystemManage/ItemsData/Index" data-index="6">数据字典</a></li>
-                                        <li><a class="menuItem" data-id="64A1C550-2C61-4A8C-833D-ACD0C012260F"
-                                               href="/SystemManage/Module/Index" data-index="7">系统菜单</a></li>
+                                               href="<?='/'.$subv2['module_name'].'/'.$subv2['controller_name'].'/'.$subv2['action_name']?>" data-index="1"><?=$subv2["name"];?></a></li>
+                                        <?php endforeach;?>
                                     </ul>
                                 </li>
-
-
+                                <?php endforeach;?>
                                 <li class="nav-header hidden-sm hidden-xs">常用菜单
                                     <i class="fa fa-gear"
                                        style="color: #868b98; font-size: 12px; margin-top: -6px; position: absolute; right: 23px; top: 50%; cursor: pointer;"></i>

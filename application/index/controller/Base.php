@@ -21,7 +21,7 @@ class Base extends Controller
         parent::__construct($request);
         //直接实例化request类方便后期调用
         $this->request = $request;
-//        echo $request->module();die;
+
     }
 
     /**
