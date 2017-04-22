@@ -40,6 +40,6 @@
 </div>
 <script>
     indexinfo.privilege_arr = [{$data.privilege_list}];
-    $('.selectpicker').selectpicker('selectAllText', indexinfo.privilege_arr);
+    $('.selectpicker').selectpicker('val', indexinfo.privilege_arr);
     $('.selectpicker').on('changed.bs.select', privilegeTree);
 </script>

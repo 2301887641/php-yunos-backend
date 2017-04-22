@@ -10,6 +10,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 use think\Session;
+use think\Url;
 
 class Base extends Controller
 {
@@ -21,7 +22,22 @@ class Base extends Controller
         parent::__construct($request);
         //直接实例化request类方便后期调用
         $this->request = $request;
-
+        if(!Session::get("id")){
+            $this->error('请先登录',Url::build("login/login/login"));
+        }
+        $pri=Session::get("privelege");
+        $module=mb_strtolower($this->request->module());
+        $controller=mb_strtolower($this->request->controller());
+        $action=mb_strtolower($this->request->action());
+        $now=$module.'/'.$controller.'/'.$action;
+        //如果是首页相关的模块是允许查看的
+        if(($module=="index") && ($controller=="index")){
+            return;
+        }
+        //权限判断
+        if($pri!="*" && !in_array($now,$pri)){
+             return view("index@role/addView");
+        }
     }
 
     /**

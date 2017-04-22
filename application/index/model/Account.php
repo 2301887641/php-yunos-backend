@@ -39,11 +39,14 @@ class Account extends Model
             return ["errno" => 1, "msg" => "没有此用户"];
         }
 
-        if ($user->getAttr("passwd") != md5($user_arr["account_password"])) {
+        if ($user->passwd != md5($user_arr["account_password"])) {
             return ["errno" => 1, "msg" => "帐号或密码错误"];
         }
-        $this->getRoles($user->getAttr("role"));
-        return ["errno" => 0,"route"=>Url::build("index/index/index")];
+
+        $this->getRoles($user->role);
+        Session::set("id", $user->id);
+        Session::set("user_name", $user->account);
+        return ["errno" => 0, "route" => Url::build("index/index/index")];
     }
 
     /**
@@ -70,32 +73,68 @@ class Account extends Model
     {
         //如果是系统管理员的话 直接将*放到session中
         if ($privilegeList == "*") {
-            Session::set("privelege","*");
+            Session::set("privelege", "*");
             //将权限表中前两级的当作菜单取出来
-            $plist = (new Privilege)->where(["parent_id" => 0])->select();
+            $plist = (new Privilege)->where(["parent_id" => 0])->field("id,name")->select();
             $this->getMenu($plist);
         } else {
-            $where=[
-                ["id"]=>["in",$privilegeList]
-            ];
-            $plist=Privilege::where($where)->field("*,concat(module_name.'/'.controller_name.'/'.action_name) as router")->select();
-
+            $where["id"] = ["in", $privilegeList];
+            $plist = Privilege::where($where)->field("*,concat(module_name,'/',controller_name,'\/',action_name) as router")->select();
+            $plist_arr = collection($plist)->toArray();
+            //session中生成权限
+            $pri = array_column($plist_arr, "router");
+            Session::set("privelege", $pri);
+            //session中生成菜单    //现在的问题是获取的数据中如何找出parent_id=0的。
+            $this->getParent($plist_arr);
         }
+    }
 
+    /**
+     * 遍历数据获取parent_id=0的
+     * @param $plist
+     */
+    public function getParent($plist)
+    {
+        $parent = [];
+        foreach ($plist as $pk => $pv) {
+            if ($pv["parent_id"] == 0) {
+                $parent[] = $pv;
+            }
+        }
+        $this->mapSub($plist,$parent);
+    }
+
+    /**
+     * 超级管理员意外的用户分配菜单
+     * @param $plist
+     * @param $parent
+     */
+    public function mapSub($plist,$parent)
+    {
+        $sub=[];
+        foreach($plist as $pk=>$pv){
+            foreach($parent as $parentk=>$parentv){
+                //这里注意在循环中 给当前循环的数组再次添加元素的技巧
+                if($pv["parent_id"]==$parentv["id"]){
+                    $parent[$parentk]["sub"][]=$pv;
+                }
+            }
+        }
+        Session::set("sub",$parent);
     }
 
     /**
      * 根据权限列表在session中放置菜单信息
+     * 根据parent_id=0 的查询下级子节点
      * @param $plist
      */
     public function getMenu($plist)
     {
         foreach ($plist as $k => $v) {
-            $temp=$v->getData();
-            $temp["sub"]=Privilege::where(["parent_id" => $temp["id"]])->field("name,module_name,controller_name,action_name")->select();
+            $temp = $v->getData();
+            $temp["sub"] = Privilege::where(["parent_id" => $temp["id"]])->field("name,module_name,controller_name,action_name")->select();
             $arr[] = $temp;
         }
-        Session::set("sub",$arr);
-
+        Session::set("sub", $arr);
     }
 }
