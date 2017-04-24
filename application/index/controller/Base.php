@@ -17,6 +17,11 @@ class Base extends Controller
     //Request实例
     protected $request;
 
+    /**
+     * 构造函数
+     * Base constructor.
+     * @param Request|null $request
+     */
     public function __construct(Request $request = null)
     {
         parent::__construct($request);
@@ -27,19 +32,17 @@ class Base extends Controller
         }
         //获取权限
         $pri=Session::get("privelege");
+
         //当前模块、控制器、方法
         $module=mb_strtolower($this->request->module());
         $controller=mb_strtolower($this->request->controller());
         $action=mb_strtolower($this->request->action());
         $now=$module.'/'.$controller.'/'.$action;
+
         //如果是首页相关的模块是允许查看的
         if(($module=="index") && ($controller=="index")){
             return;
         }
-//
-//        var_dump(in_array($now,$pri));
-//        var_dump($now,$pri);die;
-
         //权限判断 无权限无法操作
         if($pri!="*" && !in_array($now,$pri)){
              exit($this->permissionDeny());
