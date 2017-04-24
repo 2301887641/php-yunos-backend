@@ -33,7 +33,7 @@ class Privilege extends Base
      * 权限添加页面
      * @return \think\response\View
      */
-    public function addView()
+    public function addview()
     {
         $privilege = new \app\index\model\Privilege();
         $helper = new \app\common\controller\Helper();

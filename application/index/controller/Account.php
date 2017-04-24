@@ -36,7 +36,7 @@ class Account extends Base
      * 添加页面展示
      * @return \think\response\View
      */
-    public function addView()
+    public function addview()
     {
         //获取角色
         $roles = (new \app\index\model\Role())->where(["is_on" => 0])->field("id,name")->select();

@@ -25,7 +25,9 @@ class Base extends Controller
         if(!Session::get("id")){
             $this->error('请先登录',Url::build("login/login/login"));
         }
+        //获取权限
         $pri=Session::get("privelege");
+        //当前模块、控制器、方法
         $module=mb_strtolower($this->request->module());
         $controller=mb_strtolower($this->request->controller());
         $action=mb_strtolower($this->request->action());
@@ -34,9 +36,13 @@ class Base extends Controller
         if(($module=="index") && ($controller=="index")){
             return;
         }
-        //权限判断
+//
+//        var_dump(in_array($now,$pri));
+//        var_dump($now,$pri);die;
+
+        //权限判断 无权限无法操作
         if($pri!="*" && !in_array($now,$pri)){
-             return view("index@role/addView");
+             exit($this->permissionDeny());
         }
     }
 
@@ -46,7 +52,7 @@ class Base extends Controller
      */
     public function permissionDeny()
     {
-        return view("common@Helper/error");
+        return $this->fetch("common@Helper/errord");
     }
 
     /**

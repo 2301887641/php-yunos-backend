@@ -79,11 +79,8 @@ class Account extends Model
             $this->getMenu($plist);
         } else {
             $where["id"] = ["in", $privilegeList];
-            $plist = Privilege::where($where)->field("*,concat(module_name,'/',controller_name,'\/',action_name) as router")->select();
+            $plist = Privilege::where($where)->select();
             $plist_arr = collection($plist)->toArray();
-            //session中生成权限
-            $pri = array_column($plist_arr, "router");
-            Session::set("privelege", $pri);
             //session中生成菜单    //现在的问题是获取的数据中如何找出parent_id=0的。
             $this->getParent($plist_arr);
         }
@@ -96,12 +93,22 @@ class Account extends Model
     public function getParent($plist)
     {
         $parent = [];
+        $pri = [];
         foreach ($plist as $pk => $pv) {
             if ($pv["parent_id"] == 0) {
                 $parent[] = $pv;
             }
+            if (strpos($pv["action_name"], ",")) {
+                $pv_arr = explode(",", $pv["action_name"]);
+                $pri[] = $pv["module_name"] . "/" . $pv["controller_name"] . "/".$pv_arr[0];
+                $pri[] = $pv["module_name"] . "/" . $pv["controller_name"] ."/". $pv_arr[1];
+                continue;
+            }
+            $pri[] = $pv["module_name"] . "/" . $pv["controller_name"] . "/" . $pv["action_name"];
         }
-        $this->mapSub($plist,$parent);
+        //session中生成权限
+        Session("privelege",$pri);
+        $this->mapSub($plist, $parent);
     }
 
     /**
@@ -109,18 +116,18 @@ class Account extends Model
      * @param $plist
      * @param $parent
      */
-    public function mapSub($plist,$parent)
+    public function mapSub($plist, $parent)
     {
-        $sub=[];
-        foreach($plist as $pk=>$pv){
-            foreach($parent as $parentk=>$parentv){
+        $sub = [];
+        foreach ($plist as $pk => $pv) {
+            foreach ($parent as $parentk => $parentv) {
                 //这里注意在循环中 给当前循环的数组再次添加元素的技巧
-                if($pv["parent_id"]==$parentv["id"]){
-                    $parent[$parentk]["sub"][]=$pv;
+                if ($pv["parent_id"] == $parentv["id"]) {
+                    $parent[$parentk]["sub"][] = $pv;
                 }
             }
         }
-        Session::set("sub",$parent);
+        Session::set("sub", $parent);
     }
 
     /**

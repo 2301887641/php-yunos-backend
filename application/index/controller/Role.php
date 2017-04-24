@@ -31,7 +31,7 @@ class Role extends Base
      * 添加角色页面展示
      * @return mixed
      */
-    public function addView()
+    public function addview()
     {
         $privilege = new \app\index\model\Privilege();
         $helper = new \app\common\controller\Helper();
