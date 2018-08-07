@@ -16,8 +16,12 @@
 
     在项目根目录执行composer install
    
+3.账号和密码:
+   账号：admin
+   密码：123456
+   当前不输入用户名和密码会直接跳转undefined页面
    
-3.解决PHP5.6版本“No input file specified”的问题
+4.解决PHP5.6版本“No input file specified”的问题
     
     原因在于使用的PHP5.6是fast_cgi模式，而在某些情况下，不能正确识别path_info所造成的错误
     默认的.htaccess里面的规则：
